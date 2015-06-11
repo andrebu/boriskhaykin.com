@@ -49,32 +49,49 @@
 			});
 			// bind filter button click
 			$('.filters-button-group').on( 'click', 'button', function() {
-				var filterValue = $( this ).attr('data-filter');
+				var filterValue = $( this ).attr('data-filter-value');
 				// use filterFn if matches value
 				//filterValue = filterFns[ filterValue ] || filterValue;
 				$grid.isotope({ filter: filterValue });
 			});
 			// change is-checked class on buttons
 //			$('.button-group').each( function( i, buttonGroup ) {
+				// When any of the buttons are clicked...
 				$('.button-group').on( 'click', 'button', function() {
 					var $buttonGroup = $( '.button-group' );
 					var $buttons = $( '.button-group .button' );
+					// Check if buttons is ".show-all"
 					if ($(this).hasClass('show-all')) {
-						$buttonGroup.find('.is-checked').removeClass('is-checked');
-						$buttons.attr('data-filter', '');
-						$('.show-all').addClass('is-checked');
+						// If ".show-all" button clicked and has "filter-value" of none, then return...
+						if (($(this).attr('data-filter-value') == '') && $(this).hasClass('is-checked')){
+							console.log('RETURNING  111111');
+							return;
+						// Else if this has value of "*" then...
+						} else if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
+							$(this).attr('data-original-filter', '');
+							$buttons.each(function(){$(this).attr('data-filter-value', $(this).attr('data-original-filter'));});
+							$buttonGroup.find('.is-checked').removeClass('is-checked');
+							$('.show-all').addClass('is-checked');
+						}
+							console.log('IF 111111');
+//						$buttons.attr('data-filter-value', $(this).attr('data-original-filter'));
 					} else {
+							console.log('ELSE 222222');
 						$('.show-all').removeClass('is-checked');
-						$('.show-all').attr('data-filter', '');
+						$('.show-all').attr('data-filter-value', $('.show-all').attr('data-original-filter'));
 						$(this).toggleClass('is-checked');
-						if ($(this).attr('data-filter') == $(this).attr('data-original-filter')) {
-							$(this).attr('data-filter', '');
-							if ($buttonGroup.find('.is-checked').length == 0) {
-								$('.show-all').addClass('is-checked');
-								$('.show-all').attr('data-filter', $('.show-all').attr('data-original-filter'));
-							}
+						if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
+							console.log('IF 3333333');
+							$(this).attr('data-filter-value', '');
 						} else {
-							$(this).attr('data-filter', $(this).attr('data-original-filter')) 
+							console.log('ELSE 44444444');
+							$(this).attr('data-filter-value', $(this).attr('data-original-filter'))
+							if ($buttonGroup.find('.is-checked').length == 0) {
+							console.log('IF 555555');
+								$('.show-all').click();
+								$('.show-all').addClass('is-checked');
+								$('.show-all').attr('data-filter-value', '');
+							}
 						}
 					}
 				});
@@ -126,13 +143,14 @@
 			<div class="filter-container">
 				<h1 class="main-header">Boris Khaykin's Work</h1>
 				<div class="buttons-container">
-					<div class="button-group filters-button-group">
+					<div class="button-group filters-button-group" data-filter-group="roles">
 						<p>You can use the buttons below to filter my works based on my contribution.</p>
-						<button class="button show-all is-checked" data-filter="*" data-original-filter="*">Show All</button>
-						<button class="button" data-filter="" data-original-filter=".tag-writer">Writer</button>
-						<button class="button" data-filter="" data-original-filter=".tag-editor">Editor</button>
-						<button class="button" data-filter="" data-original-filter=".tag-director">Director</button>
-						<button class="button" data-filter="" data-original-filter=".tag-actor">Actor</button>
+						<button class="button show-all is-checked" data-filter-value="" data-original-filter="*">Show All</button>
+						<button class="button" data-filter-value=".tag-writer" data-original-filter=".tag-writer">Writer</button>
+						<button class="button" data-filter-value=".tag-editor" data-original-filter=".tag-editor">Editor</button>
+						<button class="button" data-filter-value=".tag-director" data-original-filter=".tag-director">Director</button>
+						<button class="button" data-filter-value=".tag-actor" data-original-filter=".tag-actor">Actor</button>
 					</div>
 				</div>
-			</div>
+			</div>			
+			
