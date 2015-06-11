@@ -153,7 +153,7 @@
 	<div id="content-area" class="clearfix">
 		<div id="content_right">
 			<div class="filter-container">
-				<h1 class="main-header">Boris Khaykin's Work</h1>
+				<h1 class="main-header">Boris Khaykin</h1>
 				<div class="buttons-container">
 					<div class="button-group filters-button-group" data-filter-group="roles">
 						<p>You can use the buttons below to filter my works based on my contribution.</p>
