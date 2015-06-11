@@ -314,11 +314,11 @@ h3#comments, h3#reply-title, #trackbacks h3 { color: #b8b8b8; font-style: italic
 /*---------------------[FOOTER]-------------------*/
 /*------------------------------------------------*/
 
-#footer_top_part { margin: 50px 0 0 45px; background: #000000) no-repeat; padding: 0 0 0 7px; }
-	#footer_top_part div { background: #000000) repeat-x; height: 7px; }
+#footer_top_part { margin: 50px 0 0 45px; no-repeat; padding: 0 0 0 7px; }
+	#footer_top_part div { height: 7px; }
 
-#main_footer { margin: 0 0 0 42px; background: #000000; padding: 0 0 0 4px; border: 0px solid #000000; }
-	#footer_bg { background: #000000); min-height: 10px; }
+#main_footer { margin: 0 0 0 42px; padding: 0 0 0 4px; border: 0px solid #000000; }
+	#footer_bg { min-height: 10px; }
 	
 		.footer-widget { width: 255px; float: left; margin: 32px 70px 0 0; line-height: 26px; padding-left: 10px; }
 			#main_footer a { color: #252525; }
