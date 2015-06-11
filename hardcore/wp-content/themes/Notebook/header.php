@@ -47,12 +47,24 @@
 				layoutMode:'fitRows',
 				resizable: false
 			});
+			var filters = {};
 			// bind filter button click
 			$('.filters-button-group').on( 'click', 'button', function() {
-				var filterValue = $( this ).attr('data-filter-value');
-				// use filterFn if matches value
-				//filterValue = filterFns[ filterValue ] || filterValue;
-				$grid.isotope({ filter: filterValue });
+				var $this = $(this);
+				// store filter value in object
+				// i.e. filters.color = 'red'
+				var group = $(this).parent('.filters-button-group').attr('data-filter-group');
+				filters[ group ] = $this.attr('data-filter-value');
+				// convert object into array
+				var isoFilters = [];
+				for ( var prop in filters ) {
+					isoFilters.push( filters[ prop ] )
+				}
+				var selector = isoFilters.join('');
+				$grid.isotope({ filter: selector });
+
+				//var filterValue = $( this ).attr('data-filter-value');
+				//$grid.isotope({ filter: filterValue });
 			});
 			// change is-checked class on buttons
 //			$('.button-group').each( function( i, buttonGroup ) {
@@ -68,10 +80,10 @@
 							return;
 						// Else if this has value of "*" then...
 						} else if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
-							$(this).attr('data-original-filter', '');
 							$buttons.each(function(){$(this).attr('data-filter-value', $(this).attr('data-original-filter'));});
+							$(this).attr('data-filter-value', '');
 							$buttonGroup.find('.is-checked').removeClass('is-checked');
-							$('.show-all').addClass('is-checked');
+							$(this).addClass('is-checked');
 						}
 							console.log('IF 111111');
 //						$buttons.attr('data-filter-value', $(this).attr('data-original-filter'));
