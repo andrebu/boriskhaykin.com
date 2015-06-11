@@ -1,0 +1,2 @@
+[27-Jan-2012 05:37:27] PHP Fatal error:  Call to undefined function get_supercache_dir() in /home/r0nin/public_html/boris/wp-content/plugins/wp-super-cache/wp-cache.php on line 329
+[27-Jan-2012 05:37:29] PHP Fatal error:  Call to undefined function get_supercache_dir() in /home/r0nin/public_html/boris/wp-content/plugins/wp-super-cache/wp-cache.php on line 329

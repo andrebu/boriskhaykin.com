@@ -1,0 +1,272 @@
+/*
+Theme Name: Notebook Child Theme
+Theme URI: http://www.elegantthemes.com/gallery/
+Version: 1.0
+Description: 2 Column theme from Elegant Themes
+Author: Elegant Themes
+Author URI: http://andrebulatov.com
+Template: Notebook
+*/
+
+@import url("../Notebook/style.css");
+
+/*
+Theme color: #6BB0DC;
+Theme color #2: #00b7f3
+*/
+
+
+
+/* Typography */
+.entry.video .content h2 a {
+  color: #333;
+}
+#top-menu a {
+	text-shadow: none;
+	color: #333;
+}
+#top-menu a:hover {
+	color: #6BB0DC;
+}
+
+
+/* Site Wide */
+body {
+	background: #ededed;
+	color: #333;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+
+
+
+/* Header */
+header #logo {
+	margin: 30px auto;
+	padding: 0;
+}
+header #logo a {
+	margin: 0 auto;
+	display: block;
+}
+header #logo a img {
+	max-width: 100%;
+	border-radius: 50%;
+	-webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	width: 200px;
+	height: 200px;
+	padding: 2px;
+	background-color: #00b7f3;
+}
+header #logo #tagline {
+/*
+	font-family: Georgia, serif;
+	font-size: 14px;
+	font-style: inherit; 
+	text-transform: uppercase;
+*/
+	color: #6BB0DC;
+}
+
+
+
+
+
+
+/* Posts */ 
+/* Filter Button area */
+.filter-container {
+	display: block;
+	width: 100%;
+	/* height: 150px; */
+	padding: 0 0 30px;
+}
+.main-header {
+	color: #333;
+	text-align: center;
+	padding: 30px 0;
+}
+/* ---- button ---- */
+.button {
+	display: inline-block;
+	padding: 10px 18px;
+	margin-bottom: 10px;
+	background: #fff;
+	border: none;
+	border-radius: 7px;
+	/* background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) ); */
+	color: #222;
+	font-size: 16px;
+	text-shadow: 0 1px white;
+	cursor: pointer;
+	-webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+}
+.button:hover {
+	background-color: #8CF;
+	text-shadow: 0 1px hsla(0, 0%, 100%, 0.5);
+	color: #222;
+}
+.button:active,
+.button.is-checked {
+	background-color: #28F;
+}
+.button.is-checked {
+	color: white;
+	text-shadow: 0 -1px hsla(0, 0%, 0%, 0.8);
+}
+.button:active {
+	box-shadow: inset 0 1px 10px hsla(0, 0%, 0%, 0.8);
+}
+/* ---- button-group ---- */
+.buttons-container {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-moz-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	}
+.button-group {
+	margin: 0 auto;
+}
+.button-group:after {
+	content: '';
+	display: block;
+	clear: both;
+}		
+.button-group .button {
+	float: left;
+	border-radius: 0;
+	margin-left: 0;
+	margin-right: 1px;
+	margin: 0;
+	border-right: 1px solid #ededed;
+}
+.button-group button:first-of-type { border-radius: 0.5em 0 0 0.5em; }
+.button-group button:last-of-type { border-radius: 0 0.5em 0.5em 0; border: 0;}
+/* Posts grid */
+#content-area #et_posts {
+}
+#content-area .entry.post {
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	-ms-transition: none;
+	transition: none;
+	border: 2px solid #6BB0DC;
+	border: none;
+	border-radius: 0;
+	-webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+ 	-moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	background-color: #fff;
+	height: initial;
+	margin: 15px 0 15px 35px;
+}
+#content-area .entry.post:hover {
+	border-color: #FFC41D;
+	-webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	-moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
+	box-shadow: rgba(0,0,0,0.15) 3px 3px 3px;
+}
+#content-area .entry.post .content {
+	text-shadow: none;
+	padding: 17px 13px;
+	height: 40px;
+}
+#content-area .entry.post .img {
+	width: auto;
+	padding: 0;
+}
+#content-area .entry.post .video_box {
+	margin: 0;
+	width: 100%;
+}
+#content-area .entry.post .overlay {
+	background: none;
+}
+#content-area .entry.post .play {
+	background: none;
+	left: 3px;
+	top: 3px;
+	height: auto;
+	width: auto;
+}
+#content-area .entry.post .play:before {
+	content: "\f144";
+	display: block;
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transform: translate(0, 0);
+	font-size: 34px;
+	height: 34px;
+	width: 34px;
+	text-align: center;
+	background-color: #999;
+	border-radius: 50%;
+	color: #eaeaea;
+	-webkit-transition: all 0.13s ease;
+	-moz-transition: all 0.13s ease;
+	-o-transition: all 0.13s ease;
+	-ms-transition: all 0.13s ease;
+	transition: all 0.13s ease;
+}
+#content-area .entry.post:hover .play:before {
+	background-color: #00b7f3;
+	color: #fff;
+}
+#content-area .entry.post img {
+	width: 100%;
+}
+#content-area .entry.post .content h2.title {
+	font-size: 16px;
+	line-height: 19px;
+	height: 100%;
+	padding: 0;
+}
+#content-area .entry.post .content h2.title a {
+	-webkit-transition: all 0.13s ease;
+	-moz-transition: all 0.13s ease;
+	-o-transition: all 0.13s ease;
+	-ms-transition: all 0.13s ease;
+	transition: all 0.13s ease;
+	display: block;
+	height: 100%;
+}
+#content-area .entry.post:hover .content h2.title a {
+	color: #00b7f3 !important;
+}
+
+
+
+
+
+
+
+
+/* Footer */
+#main_footer {
+	background: #fff;
+}
+/* Foober notification bottom bar */
+body .foobar-wrapper.fb-bottom .foobar-container {
+	background-color: #6BB0DC !important;
+}
+body .foobar-wrapper.fb-bottom .foobar-container .foobar-message-wrapper {
+	text-shadow: none !important;
+}
