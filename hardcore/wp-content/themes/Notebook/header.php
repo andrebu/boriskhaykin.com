@@ -40,13 +40,45 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js"></script>
 	<script type="text/javascript">
 		jQuery( document ).ready(function( $ ) {
-			var $grid = $('#et_posts').isotope({
-				// options
-				itemSelector: '.post',
-				animationEngine : 'best-available',
-				layoutMode:'fitRows',
-				resizable: false
-			});
+
+
+			var $grid = $('#et_posts'),
+				$checkboxes = $('.filters-button-group button');
+
+				$grid.isotope({
+					// options
+					itemSelector: '.post',
+					animationEngine : 'best-available',
+					layoutMode:'fitRows',
+					resizable: false
+				});
+				// get Isotope instance
+				var isotope = $grid.data('isotope');
+
+  // add even classes to every other visible item, in current order
+/*
+  function addEvenClasses() {
+    isotope.$filteredAtoms.each( function( i, elem ) {
+      $(elem)[ ( i % 2 ? 'addClass' : 'removeClass' ) ]('even')
+    });
+  }
+*/
+
+				$checkboxes.change(function(){
+					var filters = [];
+					// get checked checkboxes values
+					$checkboxes.filter('.is-checked').each(function(){
+						filters.push( this.attr('data-filter-value') );
+					});
+					// ['.red', '.blue'] -> '.red, .blue'
+					filters = filters.join('');
+					$grid.isotope({ filter: filters });
+					//addEvenClasses();
+				});
+
+
+			
+/*
 			var filters = {};
 			// bind filter button click
 			$('.filters-button-group').on( 'click', 'button', function() {
@@ -66,13 +98,15 @@
 				//var filterValue = $( this ).attr('data-filter-value');
 				//$grid.isotope({ filter: filterValue });
 			});
+*/
+
 			// change is-checked class on buttons
 //			$('.button-group').each( function( i, buttonGroup ) {
 				// When any of the buttons are clicked...
 				$('.button-group').on( 'click', 'button', function() {
 					var $buttonGroup = $( '.button-group' );
 					var $buttons = $( '.button-group .button' );
-					// Check if buttons is ".show-all"
+					// "Show All" button behavior -- Check if buttons is ".show-all"
 					if ($(this).hasClass('show-all')) {
 						// If ".show-all" button clicked and has "filter-value" of none, then return...
 						if (($(this).attr('data-filter-value') == '') && $(this).hasClass('is-checked')){
@@ -87,6 +121,7 @@
 						}
 							console.log('IF 111111');
 //						$buttons.attr('data-filter-value', $(this).attr('data-original-filter'));
+					// If NOT the "Show All" button, then...
 					} else {
 							console.log('ELSE 222222');
 						$('.show-all').removeClass('is-checked');
@@ -94,7 +129,7 @@
 						$(this).toggleClass('is-checked');
 						if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
 							console.log('IF 3333333');
-							$(this).attr('data-filter-value', '');
+							//$(this).attr('data-filter-value', '');
 						} else {
 							console.log('ELSE 44444444');
 							$(this).attr('data-filter-value', $(this).attr('data-original-filter'))
@@ -158,10 +193,10 @@
 					<div class="button-group filters-button-group" data-filter-group="roles">
 						<p>You can use the buttons below to filter my works based on my contribution.</p>
 						<button class="button show-all is-checked" data-filter-value="" data-original-filter="*">Show All</button>
-						<button class="button" data-filter-value=".tag-writer" data-original-filter=".tag-writer">Writer</button>
-						<button class="button" data-filter-value=".tag-editor" data-original-filter=".tag-editor">Editor</button>
-						<button class="button" data-filter-value=".tag-director" data-original-filter=".tag-director">Director</button>
 						<button class="button" data-filter-value=".tag-actor" data-original-filter=".tag-actor">Actor</button>
+						<button class="button" data-filter-value=".tag-director" data-original-filter=".tag-director">Director</button>
+						<button class="button" data-filter-value=".tag-editor" data-original-filter=".tag-editor">Editor</button>
+						<button class="button" data-filter-value=".tag-writer" data-original-filter=".tag-writer">Writer</button>
 					</div>
 				</div>
 			</div>			
