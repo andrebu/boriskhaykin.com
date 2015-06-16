@@ -43,7 +43,7 @@
 
 
 			var $grid = $('#et_posts'),
-				$checkboxes = $('.filters-button-group button');
+				$checkboxes = $('.filters-button-group input');
 
 				$grid.isotope({
 					// options
@@ -53,7 +53,7 @@
 					resizable: false
 				});
 				// get Isotope instance
-				var isotope = $grid.data('isotope');
+				//var isotope = $grid.data('isotope');
 
   // add even classes to every other visible item, in current order
 /*
@@ -65,10 +65,12 @@
 */
 
 				$checkboxes.change(function(){
+					console.log('CHANGE function is working')
 					var filters = [];
 					// get checked checkboxes values
-					$checkboxes.filter('.is-checked').each(function(){
-						filters.push( this.attr('data-filter-value') );
+					$checkboxes.filter(':checked').each(function(){
+						console.log('FILTER function is working')
+						filters.push( this.value );
 					});
 					// ['.red', '.blue'] -> '.red, .blue'
 					filters = filters.join('');
@@ -192,11 +194,18 @@
 				<div class="buttons-container">
 					<div class="button-group filters-button-group" data-filter-group="roles">
 						<p>You can use the buttons below to filter my works based on my contribution.</p>
+<!--
 						<button class="button show-all is-checked" data-filter-value="" data-original-filter="*">Show All</button>
 						<button class="button" data-filter-value=".tag-actor" data-original-filter=".tag-actor">Actor</button>
 						<button class="button" data-filter-value=".tag-director" data-original-filter=".tag-director">Director</button>
 						<button class="button" data-filter-value=".tag-editor" data-original-filter=".tag-editor">Editor</button>
 						<button class="button" data-filter-value=".tag-writer" data-original-filter=".tag-writer">Writer</button>
+-->
+						<input type="checkbox" name="show-all" value="*" id="show-all" class="show-all"><label for="show-all">Show All</label>
+						<input type="checkbox" name="tag-actor" value=".tag-actor" id="tag-actor"><label for="tag-actor">Acted</label>
+						<input type="checkbox" name="tag-director" value=".tag-director" id="tag-director"><label for="tag-director">Directed</label>
+						<input type="checkbox" name="tag-editor" value=".tag-editor" id="tag-editor"><label for="tag-editor">Edited</label>
+						<input type="checkbox" name="tag-writer" value=".tag-writer" id="tag-writer"><label for="tag-writer">Wrote</label>
 					</div>
 				</div>
 			</div>			
