@@ -40,111 +40,59 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.0/isotope.pkgd.min.js"></script>
 	<script type="text/javascript">
 		jQuery( document ).ready(function( $ ) {
-
-
+			// Initialize isotope and setup variables
 			var $grid = $('#et_posts'),
-				$checkboxes = $('.filters-button-group input');
-
-				$grid.isotope({
-					// options
-					itemSelector: '.post',
-					animationEngine : 'best-available',
-					layoutMode:'fitRows',
-					resizable: false
-				});
-				// get Isotope instance
-				//var isotope = $grid.data('isotope');
-
-  // add even classes to every other visible item, in current order
-/*
-  function addEvenClasses() {
-    isotope.$filteredAtoms.each( function( i, elem ) {
-      $(elem)[ ( i % 2 ? 'addClass' : 'removeClass' ) ]('even')
-    });
-  }
-*/
-
-				$checkboxes.change(function(){
-					console.log('CHANGE function is working')
-					var filters = [];
-					// get checked checkboxes values
-					$checkboxes.filter(':checked').each(function(){
-						console.log('FILTER function is working')
-						filters.push( this.value );
-					});
-					// ['.red', '.blue'] -> '.red, .blue'
-					filters = filters.join('');
-					$grid.isotope({ filter: filters });
-					//addEvenClasses();
-				});
-
-
-			
-/*
-			var filters = {};
-			// bind filter button click
-			$('.filters-button-group').on( 'click', 'button', function() {
-				var $this = $(this);
-				// store filter value in object
-				// i.e. filters.color = 'red'
-				var group = $(this).parent('.filters-button-group').attr('data-filter-group');
-				filters[ group ] = $this.attr('data-filter-value');
-				// convert object into array
-				var isoFilters = [];
-				for ( var prop in filters ) {
-					isoFilters.push( filters[ prop ] )
-				}
-				var selector = isoFilters.join('');
-				$grid.isotope({ filter: selector });
-
-				//var filterValue = $( this ).attr('data-filter-value');
-				//$grid.isotope({ filter: filterValue });
+				$checkboxes = $('#filters-group input'),
+				$showAll = $('#show-all');
+				//$filterGroup = $( '#filters-group' ),
+				//$filters = $( '#filters-group input' );
+			$grid.isotope({
+				// options
+				itemSelector: '.post',
+				animationEngine : 'best-available',
+				layoutMode:'fitRows',
+				resizable: false
 			});
-*/
-
-			// change is-checked class on buttons
-//			$('.button-group').each( function( i, buttonGroup ) {
-				// When any of the buttons are clicked...
-				$('.button-group').on( 'click', 'button', function() {
-					var $buttonGroup = $( '.button-group' );
-					var $buttons = $( '.button-group .button' );
-					// "Show All" button behavior -- Check if buttons is ".show-all"
-					if ($(this).hasClass('show-all')) {
-						// If ".show-all" button clicked and has "filter-value" of none, then return...
-						if (($(this).attr('data-filter-value') == '') && $(this).hasClass('is-checked')){
-							console.log('RETURNING  111111');
-							return;
-						// Else if this has value of "*" then...
-						} else if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
-							$buttons.each(function(){$(this).attr('data-filter-value', $(this).attr('data-original-filter'));});
-							$(this).attr('data-filter-value', '');
-							$buttonGroup.find('.is-checked').removeClass('is-checked');
-							$(this).addClass('is-checked');
-						}
-							console.log('IF 111111');
-//						$buttons.attr('data-filter-value', $(this).attr('data-original-filter'));
-					// If NOT the "Show All" button, then...
-					} else {
-							console.log('ELSE 222222');
-						$('.show-all').removeClass('is-checked');
-						$('.show-all').attr('data-filter-value', $('.show-all').attr('data-original-filter'));
-						$(this).toggleClass('is-checked');
-						if ($(this).attr('data-filter-value') == $(this).attr('data-original-filter')) {
-							console.log('IF 3333333');
-							//$(this).attr('data-filter-value', '');
-						} else {
-							console.log('ELSE 44444444');
-							$(this).attr('data-filter-value', $(this).attr('data-original-filter'))
-							if ($buttonGroup.find('.is-checked').length == 0) {
-							console.log('IF 555555');
-								$('.show-all').click();
-								$('.show-all').addClass('is-checked');
-								$('.show-all').attr('data-filter-value', '');
-							}
-						}
-					}
+			// On button clicked, gather all input values and filter posts
+			$checkboxes.change(function(){
+				var filters = [];
+				// get checked checkboxes values
+				$checkboxes.filter(':checked').each(function(){
+					filters.push( this.value );
 				});
-//			});
+				// ['.red', '.blue'] -> '.red, .blue'
+				filters = filters.join('');
+				$grid.isotope({ filter: filters });
+			});
+
+			// Input click behavior
+			// When any of the buttons are clicked...
+			$checkboxes.on('click', 'input', function() {
+				// "Show All" button behavior -- Check if buttons is ".show-all"
+				if ($showAll) {
+					// If ".show-all" button clicked and has "filter-value" of none, then return...
+					if ($(this).is(':checked')){
+						//e.stopPropagation()
+						console.log('this is CHECKED SHOW ALL');
+						return;
+					// Else, if not checked then set as :checked and remove :checked from other inputs.
+					} else {
+						console.log('this is Show All but NOTTTTT checked so we will set it to CHECKED');
+						$checkboxes.filter(':checked').prop('checked', false);
+						$(this).prop('checked', true);
+					}
+				// If NOT the "Show All" button, then...
+				} else {
+					console.log('it is NOT show all so we will go into else');
+					if ($checkboxes.filter(':checked').length == 0) {
+						console.log(':checke items are 0 so we will "click" and "check" show all');
+						$showAll.prop('checked', true).click();
+					} else {
+						console.log('this is an un-checked input so we will remove check from show all and put a check here');
+						$showAll.prop('checked', false);
+					}
+				}
+			});
 		});
 	</script>
 	<style>
@@ -189,24 +137,26 @@
 			
 	<div id="content-area" class="clearfix">
 		<div id="content_right">
-			<div class="filter-container">
-				<h1 class="main-header">Boris Khaykin</h1>
-				<div class="buttons-container">
-					<div class="button-group filters-button-group" data-filter-group="roles">
-						<p>You can use the buttons below to filter my works based on my contribution.</p>
-<!--
-						<button class="button show-all is-checked" data-filter-value="" data-original-filter="*">Show All</button>
-						<button class="button" data-filter-value=".tag-actor" data-original-filter=".tag-actor">Actor</button>
-						<button class="button" data-filter-value=".tag-director" data-original-filter=".tag-director">Director</button>
-						<button class="button" data-filter-value=".tag-editor" data-original-filter=".tag-editor">Editor</button>
-						<button class="button" data-filter-value=".tag-writer" data-original-filter=".tag-writer">Writer</button>
--->
+			<h1 class="main-header">Boris Khaykin</h1>
+			<div id="filters-container">
+				<p>You can use the buttons below to filter Boris Khaykin's works based on his contribution.</p>
+				<div id="filters-group" data-filter-group="roles">
+					<div class="one-filter">
 						<input type="checkbox" name="show-all" value="*" id="show-all" class="show-all"><label for="show-all">Show All</label>
+					</div>
+					<div class="one-filter">
 						<input type="checkbox" name="tag-actor" value=".tag-actor" id="tag-actor"><label for="tag-actor">Acted</label>
+					</div>
+					<div class="one-filter">
 						<input type="checkbox" name="tag-director" value=".tag-director" id="tag-director"><label for="tag-director">Directed</label>
+					</div>
+					<div class="one-filter">
 						<input type="checkbox" name="tag-editor" value=".tag-editor" id="tag-editor"><label for="tag-editor">Edited</label>
+					</div>
+					<div class="one-filter">
 						<input type="checkbox" name="tag-writer" value=".tag-writer" id="tag-writer"><label for="tag-writer">Wrote</label>
 					</div>
 				</div>
-			</div>			
+			</div>
+			<hr>
 			
