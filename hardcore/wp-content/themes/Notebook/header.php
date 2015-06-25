@@ -43,7 +43,8 @@
 			// Initialize isotope and setup variables
 			var $grid = $('#et_posts'),
 				$checkboxes = $('#filters-group input'),
-				$showAll = $('.show-all');
+				$checkboxLabels = $('#filters-group label'),
+				$showAll = $('#show-all');
 				//$filterGroup = $( '#filters-group' ),
 				//$filters = $( '#filters-group input' );
 			$grid.isotope({
@@ -66,13 +67,17 @@
 			});
 
 			var labelID;
-			
-/*
-			$('label').click(function() {
-			       labelID = $(this).attr('for');
-			       $('#'+labelID).trigger('click');
+			$checkboxLabels.click(function() {
+					labelID = $(this).attr('for');
+					//$('#'+labelID).trigger('click');
+					if (labelID == 'show-all') {
+						console.log('Show ALL.');
+						$checkboxes.prop('checked', false);
+					} else {
+						console.log('OTHERS');
+						$showAll.prop('checked', false);
+					}
 			});
-*/
 
 			// Input click behavior
 			// When any of the buttons are clicked...
