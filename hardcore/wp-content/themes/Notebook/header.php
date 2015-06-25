@@ -45,14 +45,15 @@
 				$checkboxes = $('#filters-group input'),
 				$checkboxLabels = $('#filters-group label'),
 				$showAll = $('#show-all');
-				//$filterGroup = $( '#filters-group' ),
-				//$filters = $( '#filters-group input' );
 			$grid.isotope({
-				// options
 				itemSelector: '.post',
 				animationEngine : 'best-available',
-				layoutMode:'fitRows',
-				resizable: false
+				masonry: {
+					//columnWidth: 290,
+					isFitWidth: true
+				}
+				//layoutMode:'fitRows',
+				//resizable: false,
 			});
 			// On button clicked, gather all input values and filter posts
 			$checkboxes.change(function(){
@@ -66,49 +67,17 @@
 				$grid.isotope({ filter: filters });
 			});
 
+			// Input click behavior
+			// When any of the buttons are clicked...
 			var labelID;
 			$checkboxLabels.click(function() {
 					labelID = $(this).attr('for');
-					//$('#'+labelID).trigger('click');
 					if (labelID == 'show-all') {
-						console.log('Show ALL.');
 						$checkboxes.prop('checked', false);
 					} else {
-						console.log('OTHERS');
 						$showAll.prop('checked', false);
 					}
 			});
-
-			// Input click behavior
-			// When any of the buttons are clicked...
-/*
-			$checkboxes.on('click', function() {
-				// "Show All" button behavior -- Check if buttons is ".show-all"
-				if ($('.show-all')) {
-					// If ".show-all" button clicked and has "filter-value" of none, then return...
-					if ($(this).closest('input').is(':checked')){
-						//e.stopPropagation()
-						console.log('this is CHECKED SHOW ALL');
-						return;
-					// Else, if not checked then set as :checked and remove :checked from other inputs.
-					} else {
-						console.log('this is Show All but NOTTTTT checked so we will set it to CHECKED');
-						$checkboxes.filter(':checked').prop('checked', false);
-						$(this).prop('checked', true);
-					}
-				// If NOT the "Show All" button, then...
-				} else {
-					console.log('it is NOT show all so we will go into else');
-					if ($checkboxes.filter(':checked').length == 0) {
-						console.log(':checke items are 0 so we will "click" and "check" show all');
-						$showAll.prop('checked', true).click();
-					} else {
-						console.log('this is an un-checked input so we will remove check from show all and put a check here');
-						$showAll.prop('checked', false);
-					}
-				}
-			});
-*/
 		});
 	</script>
 	<style>
@@ -158,7 +127,7 @@
 				<p>You can use the buttons below to filter Boris Khaykin's works based on his contribution.</p>
 				<div id="filters-group" data-filter-group="roles">
 					<div class="one-filter show-all">
-						<input type="checkbox" name="show-all" value="*" class="show-all" id="show-all">
+						<input type="checkbox" name="show-all" value="*" class="show-all" id="show-all" checked="checked">
 						<label for="show-all">
 							<i class="fa fa-asterisk"></i> Show All
 						</label>
