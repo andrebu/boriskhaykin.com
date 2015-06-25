@@ -43,7 +43,7 @@
 			// Initialize isotope and setup variables
 			var $grid = $('#et_posts'),
 				$checkboxes = $('#filters-group input'),
-				$showAll = $('#show-all');
+				$showAll = $('.show-all');
 				//$filterGroup = $( '#filters-group' ),
 				//$filters = $( '#filters-group input' );
 			$grid.isotope({
@@ -65,13 +65,23 @@
 				$grid.isotope({ filter: filters });
 			});
 
+			var labelID;
+			
+/*
+			$('label').click(function() {
+			       labelID = $(this).attr('for');
+			       $('#'+labelID).trigger('click');
+			});
+*/
+
 			// Input click behavior
 			// When any of the buttons are clicked...
-			$checkboxes.on('click', 'input', function() {
+/*
+			$checkboxes.on('click', function() {
 				// "Show All" button behavior -- Check if buttons is ".show-all"
-				if ($showAll) {
+				if ($('.show-all')) {
 					// If ".show-all" button clicked and has "filter-value" of none, then return...
-					if ($(this).is(':checked')){
+					if ($(this).closest('input').is(':checked')){
 						//e.stopPropagation()
 						console.log('this is CHECKED SHOW ALL');
 						return;
@@ -93,6 +103,7 @@
 					}
 				}
 			});
+*/
 		});
 	</script>
 	<style>
@@ -141,20 +152,35 @@
 			<div id="filters-container">
 				<p>You can use the buttons below to filter Boris Khaykin's works based on his contribution.</p>
 				<div id="filters-group" data-filter-group="roles">
-					<div class="one-filter">
-						<input type="checkbox" name="show-all" value="*" id="show-all" class="show-all"><label for="show-all">Show All</label>
+					<div class="one-filter show-all">
+						<input type="checkbox" name="show-all" value="*" class="show-all" id="show-all">
+						<label for="show-all">
+							<i class="fa fa-asterisk"></i> Show All
+						</label>
 					</div>
-					<div class="one-filter">
-						<input type="checkbox" name="tag-actor" value=".tag-actor" id="tag-actor"><label for="tag-actor">Acted</label>
+					<div class="one-filter actor">
+						<input type="checkbox" name="tag-actor" value=".tag-actor" id="tag-actor">
+						<label for="tag-actor">
+							<i class="fa fa-star"></i> Acted
+						</label>
 					</div>
-					<div class="one-filter">
-						<input type="checkbox" name="tag-director" value=".tag-director" id="tag-director"><label for="tag-director">Directed</label>
+					<div class="one-filter director">
+						<input type="checkbox" name="tag-director" value=".tag-director" id="tag-director">
+						<label for="tag-director">
+							<i class="fa fa-video-camera"></i> Directed
+						</label>
 					</div>
-					<div class="one-filter">
-						<input type="checkbox" name="tag-editor" value=".tag-editor" id="tag-editor"><label for="tag-editor">Edited</label>
+					<div class="one-filter editor">
+						<input type="checkbox" name="tag-editor" value=".tag-editor" id="tag-editor">
+						<label for="tag-editor">
+							<i class="fa fa-pencil-square-o"></i> Edited
+						</label>
 					</div>
-					<div class="one-filter">
-						<input type="checkbox" name="tag-writer" value=".tag-writer" id="tag-writer"><label for="tag-writer">Wrote</label>
+					<div class="one-filter writer">
+						<input type="checkbox" name="tag-writer" value=".tag-writer" id="tag-writer">
+						<label for="tag-writer">
+							<i class="fa fa-pencil-square"></i> Wrote
+						</label>
 					</div>
 				</div>
 			</div>
