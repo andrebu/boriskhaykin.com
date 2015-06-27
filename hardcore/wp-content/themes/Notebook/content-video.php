@@ -31,4 +31,10 @@
 		
 		<?php get_template_part('includes/postinfo'); ?>
 	</div>
+	<div class="tag-strip">
+		<div class="strip-piece strip-actor"></div>
+		<div class="strip-piece strip-director"></div>
+		<div class="strip-piece strip-editor"></div>
+		<div class="strip-piece strip-writer"></div>
+	</div>
 </article> <!-- end .entry-->
