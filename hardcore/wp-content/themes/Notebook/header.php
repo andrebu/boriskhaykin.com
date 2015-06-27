@@ -42,9 +42,7 @@
 		jQuery( document ).ready(function( $ ) {
 			// Initialize isotope and setup variables
 			var $grid = $('#et_posts'),
-				$checkboxes = $('#filters-group input'),
-				$checkboxLabels = $('#filters-group label'),
-				$showAll = $('#show-all');
+				$checkboxes = $('#filters-group input');
 			$grid.isotope({
 				itemSelector: '.post',
 				animationEngine : 'best-available',
@@ -69,14 +67,22 @@
 
 			// Input click behavior
 			// When any of the buttons are clicked...
-			var labelID;
+			$checkboxLabels = $('#filters-group label');
 			$checkboxLabels.click(function() {
-					labelID = $(this).attr('for');
-					if (labelID == 'show-all') {
-						$checkboxes.prop('checked', false);
+				var labelID,
+					$roleBoxes = $('#filters-group .one-filter:not(.show-all) input'),
+					checkedRoles = $roleBoxes.filter(':checked').length,
+					$showAll = $('#show-all');
+				labelID = $(this).attr('for');
+				if (labelID == 'show-all') {
+					$checkboxes.prop('checked', false);
+				} else {
+					if ((checkedRoles == 1) && ($(this).parent().find('input').prop('checked') == true)) {
+						$showAll.prop('checked', true);
 					} else {
 						$showAll.prop('checked', false);
 					}
+				}
 			});
 		});
 	</script>
