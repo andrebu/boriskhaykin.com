@@ -129,31 +129,31 @@
 					<div class="one-filter show-all">
 						<input type="checkbox" name="show-all" value="*" class="show-all" id="show-all" checked="checked">
 						<label for="show-all">
-							<i class="fa fa-asterisk"></i> Show All
+							<i class="fa fa-asterisk"></i> All
 						</label>
 					</div>
 					<div class="one-filter actor">
 						<input type="checkbox" name="tag-actor" value=".tag-actor" id="tag-actor">
 						<label for="tag-actor">
-							<i class="fa fa-star"></i> Acted
+							<i class="fa fa-star"></i> Actor
 						</label>
 					</div>
 					<div class="one-filter director">
 						<input type="checkbox" name="tag-director" value=".tag-director" id="tag-director">
 						<label for="tag-director">
-							<i class="fa fa-video-camera"></i> Directed
+							<i class="fa fa-video-camera"></i> Director
 						</label>
 					</div>
 					<div class="one-filter editor">
 						<input type="checkbox" name="tag-editor" value=".tag-editor" id="tag-editor">
 						<label for="tag-editor">
-							<i class="fa fa-pencil-square-o"></i> Edited
+							<i class="fa fa-pencil-square-o"></i> Editor
 						</label>
 					</div>
 					<div class="one-filter writer">
 						<input type="checkbox" name="tag-writer" value=".tag-writer" id="tag-writer">
 						<label for="tag-writer">
-							<i class="fa fa-pencil-square"></i> Wrote
+							<i class="fa fa-pencil-square"></i> Writer
 						</label>
 					</div>
 				</div>
