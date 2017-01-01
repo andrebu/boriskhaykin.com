@@ -32,7 +32,7 @@ Theme color #2: #00b7f3
 
 /* Site Wide */
 body {
-	background: #ededed;
+	background: #fff;
 	color: #333;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -48,7 +48,7 @@ hr {
 
 
 
-/* Header */
+/* Header Left */
 header #logo {
 	margin: 30px auto;
 	padding: 0;
@@ -68,31 +68,86 @@ header #logo a img {
 	padding: 2px;
 	background-color: #00b7f3;
 }
-header #logo #tagline {
-/*
-	font-family: Georgia, serif;
-	font-size: 14px;
-	font-style: inherit; 
-	text-transform: uppercase;
-*/
-	color: #6BB0DC;
-}
-
-
-
-
+/* Header Right */
 .main-header {
 	color: #333;
 	text-align: center;
-	padding: 30px 0;
+	padding: 30px 0 0;
 	font-size: 50px;
 	font-weight: 700;
+}
+#tagline {
+	font-family: inherit;
+    font-style: normal;
+    color: inherit;
+    font-size: 20px;
+    text-align: center;
+    margin: 5px 0 30px;
+}
+
+
+/* Nav Left */
+nav#top-menu {
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-weight: lighter;
+    line-height: 1.37;
+}
+#top-menu > ul > li.current_page_item > a {
+    color: #00B7F3 !important;
+}
+
+
+/* Tumblr Post Sidebar Left */
+.widget ul li {
+    padding: 4px 0;
+    display: block;
+    margin: 0 0 10px;
+}
+.widget .widget-title a.rsswidget:nth-of-type(2) {
+    text-transform: lowercase;
+    font-style: normal;
+    color: #fff;
+    font-family: HelveticaNeue;
+    font-weight: bold;
+    font-family: serif;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 1px #6ca7bf, -1px -1px 1px #6ca7bf, -1px 1px 1px #6ca7bf, 1px -1px 1px #6ca7bf;
+    font-size: 20px;
+}
+.widget .widget-title a.rsswidget:nth-of-type(2):after {
+    content: ".";
+}
+.widget ul li a.rsswidget {
+    text-transform: uppercase;
+    line-height: 17px;
+    display: inherit;
+    margin: 0 auto 7px;
+}
+.widget ul li div.rssSummary {
+    line-height: 1.37;
 }
 
 
 
 
-/* Filter Area */
+/* Main Page Article Post Notebook Background */
+article.single_view {
+    border: 0;
+    box-shadow: none;
+}
+div#post_content {
+    background: none;
+}
+h6.post-answer {
+    background: #eaeaea;
+    color: #777;
+}
+
+
+
+
+/* Videos Filter Area */
 #filters-container {
 	padding: 0 0 30px;
 	text-align: center;
@@ -144,6 +199,9 @@ header #logo #tagline {
 }
 
 
+
+
+
 /* Posts grid */
 #et_posts {
 	margin: 0 auto;
@@ -156,11 +214,11 @@ header #logo #tagline {
 	clear: both;
 }
 #content-area .entry.post {
-	-webkit-transition: none;
-	-moz-transition: none;
-	-o-transition: none;
-	-ms-transition: none;
-	transition: none;
+	-webkit-transition: box-shadow 370ms;
+	-moz-transition: box-shadow 370ms;
+	-o-transition: box-shadow 370ms;
+	-ms-transition: box-shadow 370ms;
+	transition: box-shadow 370ms;
 	border: 2px solid #6BB0DC;
 	border: none;
 	border-radius: 0;
@@ -176,11 +234,6 @@ header #logo #tagline {
 	-webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
 	-moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 3px;
 	box-shadow: rgba(0,0,0,0.15) 3px 3px 3px;
-}
-#content-area .entry.post .content {
-	text-shadow: none;
-	padding: 17px 13px;
-	height: 40px;
 }
 #content-area .entry.post .img {
 	width: auto;
@@ -229,6 +282,11 @@ header #logo #tagline {
 #content-area .entry.post img {
 	width: 100%;
 }
+#content-area .entry.post .content {
+	text-shadow: none;
+	padding: 0;
+	height: 72px;
+}
 #content-area .entry.post .content h2.title {
 	font-size: 16px;
 	line-height: 19px;
@@ -242,7 +300,8 @@ header #logo #tagline {
 	-ms-transition: all 0.13s ease;
 	transition: all 0.13s ease;
 	display: block;
-	height: 100%;
+	height: 53%;
+    padding: 17px 13px;
 }
 #content-area .entry.post:hover .content h2.title a {
 	color: #00b7f3 !important;

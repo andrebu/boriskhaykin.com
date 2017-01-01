@@ -30,6 +30,7 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 			'auth_ids'      => array(),
 			'tag_ids'       => array(),
 			'post_ids'      => array(),
+			'instance_ids'  => array(),
 			'exact_date'    => $date_system->current_time(),
 		);
 		$args = wp_parse_args( $view_args, $defaults );
@@ -47,12 +48,17 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 			apply_filters(
 				'ai1ec_get_events_relative_to_filter',
 				array(
-					'cat_ids'  => $args['cat_ids'],
-					'tag_ids'  => $args['tag_ids'],
-					'post_ids' => $args['post_ids'],
-					'auth_ids' => $args['auth_ids'],
+					'cat_ids'      => $args['cat_ids'],
+					'tag_ids'      => $args['tag_ids'],
+					'post_ids'     => $args['post_ids'],
+					'auth_ids'     => $args['auth_ids'],
+					'instance_ids' => $args['instance_ids'],
 				),
-				$view_args
+				$view_args,
+				apply_filters(
+					'ai1ec_show_unique_events',
+					false
+				)
 			)
 		);
 		$cell_array = $this->get_month_cell_array(
@@ -97,6 +103,8 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 			)
 		);
 
+		$view_args = $this->get_extra_template_arguments( $view_args );
+
 		return
 			$this->_registry->get( 'http.request' )->is_json_required(
 				$args['request_format'], 'month'
@@ -123,12 +131,14 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 
 		$local_date = $this->_registry
 			->get( 'date.time', $args['exact_date'], 'sys.default' );
-		$orig_date = $this->_registry->get( 'date.time',  $local_date );
+		$orig_date  = $this->_registry->get( 'date.time',  $local_date );
+		$default_tz = $this->_registry->get( 'date.timezone' )->get_default_timezone();
 		// =================
 		// = Previous year =
 		// =================
 		// Align date to first of month, month offset applied, 1 year behind.
 		$local_date
+			->set_timezone( $default_tz )
 			->set_date(
 				$local_date->format( 'Y' ) -1,
 				$local_date->format( 'm' ) + $args['month_offset'],
@@ -141,8 +151,7 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 		$links[] = array(
 			'enabled' => true,
 			'class'=> 'ai1ec-prev-year',
-			'text' =>
-			'<i class="ai1ec-fa ai1ec-fa-angle-double-left"></i> ' .
+			'text' => '<i class="ai1ec-fa ai1ec-fa-angle-double-left"></i> ' .
 				$local_date->format_i18n( 'Y' ),
 			'href' => $href->generate_href(),
 		);
@@ -173,6 +182,7 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 		// Align date to first of month, month offset applied.
 
 		$orig_date
+			->set_timezone('UTC')
 			->set_date(
 				$orig_date->format( 'Y' ),
 				$orig_date->format( 'm' ) + $args['month_offset'],
@@ -191,18 +201,19 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 		// ==============
 		// Align date to first of month, month offset applied, 1 month ahead.
 		$orig_date
+			->set_timezone( $default_tz )
 			->set_date(
 				$orig_date->format( 'Y' ),
 				$orig_date->format( 'm' ) + 1,
 				1
-			);
+			)
+			->set_time( 0, 0, 0 );
 		$args['exact_date'] = $orig_date->format();
 		$href = $this->_registry->get( 'html.element.href', $args );
 		$links[] = array(
 			'enabled' => true,
 			'class'=> 'ai1ec-next-month',
-			'text' =>
-			$orig_date->format_i18n( 'M' ) .
+			'text' => $orig_date->format_i18n( 'M' ) .
 			' <i class="ai1ec-fa ai1ec-fa-angle-right"></i>',
 			'href' => $href->generate_href(),
 		);
@@ -222,8 +233,7 @@ class Ai1ec_Calendar_View_Month extends Ai1ec_Calendar_View_Abstract {
 		$links[] = array(
 			'enabled' => true,
 			'class'=> 'ai1ec-next-year',
-			'text' =>
-			$orig_date->format_i18n( 'Y' ) .
+			'text' => $orig_date->format_i18n( 'Y' ) .
 			' <i class="ai1ec-fa ai1ec-fa-angle-double-right"></i>',
 			'href' => $href->generate_href(),
 		);

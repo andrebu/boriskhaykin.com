@@ -1,4 +1,0 @@
-[08-Dec-2011 06:18:41] PHP Fatal error:  Call to undefined function get_header() in /home/r0nin/public_html/boris/wp-content/themes/Notebook/index.php on line 1
-[08-Dec-2011 06:18:42] PHP Fatal error:  Call to undefined function get_header() in /home/r0nin/public_html/boris/wp-content/themes/Notebook/index.php on line 1
-[08-Dec-2011 06:18:45] PHP Fatal error:  Call to undefined function get_header() in /home/r0nin/public_html/boris/wp-content/themes/Notebook/index.php on line 1
-[08-Dec-2011 06:18:46] PHP Fatal error:  Call to undefined function get_header() in /home/r0nin/public_html/boris/wp-content/themes/Notebook/index.php on line 1

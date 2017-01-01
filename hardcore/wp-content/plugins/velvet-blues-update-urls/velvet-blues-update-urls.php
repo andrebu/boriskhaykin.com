@@ -6,11 +6,11 @@ Description: This plugin <strong>updates all urls in your website</strong> by re
 Author: VelvetBlues.com
 Author URI: http://www.velvetblues.com/
 Author Email: info@velvetblues.com
-Version: 3.2.3
+Version: 3.2.7
 License: GPLv2 or later
 Text Domain: velvet-blues-update-urls
 */
-/*  Copyright 2014  Velvet Blues Web Design  (email : info@velvetblues.com)
+/*  Copyright 2016  Velvet Blues Web Design  (email : info@velvetblues.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,13 +26,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-if ( !function_exists( 'add_action' ) ) {
-?>
-<h3>Oops! This page cannot be accessed directly.</h3>
-<p>For support using the Velvet Blues Update URLs plugin, <a href="http://www.velvetblues.com/web-development-blog/wordpress-plugin-update-urls/" title="Velvet Blues Update URLs WordPress plugin">click here</a>.</p>
-<p>If you are looking for general WordPress assistance, <a href="http://www.velvetblues.com/" title="WordPress Web Development and Services">Velvet Blues can help with that too</a>.</p>
-<?php
-	exit;
+if ( !function_exists( 'add_action' ) ) { exit; 
 }
 function VelvetBluesUU_add_management_page(){
 	add_management_page("Velvet Blues Update URLs", "Update URLs", "manage_options", basename(__FILE__), "VelvetBluesUU_management_page");
@@ -41,75 +35,80 @@ function VelvetBluesUU_load_textdomain(){
 	load_plugin_textdomain( 'velvet-blues-update-urls', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 function VelvetBluesUU_management_page(){
-	function VB_update_urls($options,$oldurl,$newurl){	
-		global $wpdb;
-		$results = array();
-		$queries = array(
-		'content' =>		array("UPDATE $wpdb->posts SET post_content = replace(post_content, %s, %s)",  __('Content Items (Posts, Pages, Custom Post Types, Revisions)','velvet-blues-update-urls') ),
-		'excerpts' =>		array("UPDATE $wpdb->posts SET post_excerpt = replace(post_excerpt, %s, %s)", __('Excerpts','velvet-blues-update-urls') ),
-		'attachments' =>	array("UPDATE $wpdb->posts SET guid = replace(guid, %s, %s) WHERE post_type = 'attachment'",  __('Attachments','velvet-blues-update-urls') ),
-		'links' =>			array("UPDATE $wpdb->links SET link_url = replace(link_url, %s, %s)", __('Links','velvet-blues-update-urls') ),
-		'custom' =>			array("UPDATE $wpdb->postmeta SET meta_value = replace(meta_value, %s, %s)",  __('Custom Fields','velvet-blues-update-urls') ),
-		'guids' =>			array("UPDATE $wpdb->posts SET guid = replace(guid, %s, %s)",  __('GUIDs','velvet-blues-update-urls') )
-		);
-		foreach($options as $option){
-			if( $option == 'custom' ){
-				$n = 0;
-				$row_count = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->postmeta" );
-				$page_size = 10000;
-				$pages = ceil( $row_count / $page_size );
-				
-				for( $page = 0; $page < $pages; $page++ ) {
-					$current_row = 0;
-					$start = $page * $page_size;
-					$end = $start + $page_size;
-					$pmquery = "SELECT * FROM $wpdb->postmeta WHERE meta_value <> ''";
-					$items = $wpdb->get_results( $pmquery );
-					foreach( $items as $item ){
-					$value = $item->meta_value;
-					if( trim($value) == '' )
-						continue;
+	if ( !function_exists( 'VB_update_urls' ) ) {
+		function VB_update_urls($options,$oldurl,$newurl){	
+			global $wpdb;
+			$results = array();
+			$queries = array(
+			'content' =>		array("UPDATE $wpdb->posts SET post_content = replace(post_content, %s, %s)",  __('Content Items (Posts, Pages, Custom Post Types, Revisions)','velvet-blues-update-urls') ),
+			'excerpts' =>		array("UPDATE $wpdb->posts SET post_excerpt = replace(post_excerpt, %s, %s)", __('Excerpts','velvet-blues-update-urls') ),
+			'attachments' =>	array("UPDATE $wpdb->posts SET guid = replace(guid, %s, %s) WHERE post_type = 'attachment'",  __('Attachments','velvet-blues-update-urls') ),
+			'links' =>			array("UPDATE $wpdb->links SET link_url = replace(link_url, %s, %s)", __('Links','velvet-blues-update-urls') ),
+			'custom' =>			array("UPDATE $wpdb->postmeta SET meta_value = replace(meta_value, %s, %s)",  __('Custom Fields','velvet-blues-update-urls') ),
+			'guids' =>			array("UPDATE $wpdb->posts SET guid = replace(guid, %s, %s)",  __('GUIDs','velvet-blues-update-urls') )
+			);
+			foreach($options as $option){
+				if( $option == 'custom' ){
+					$n = 0;
+					$row_count = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->postmeta" );
+					$page_size = 10000;
+					$pages = ceil( $row_count / $page_size );
 					
-						$edited = VB_unserialize_replace( $oldurl, $newurl, $value );
-					
-						if( $edited != $value ){
-							$fix = $wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '".$edited."' WHERE meta_id = ".$item->meta_id );
-							if( $fix )
-								$n++;
+					for( $page = 0; $page < $pages; $page++ ) {
+						$current_row = 0;
+						$start = $page * $page_size;
+						$end = $start + $page_size;
+						$pmquery = "SELECT * FROM $wpdb->postmeta WHERE meta_value <> ''";
+						$items = $wpdb->get_results( $pmquery );
+						foreach( $items as $item ){
+						$value = $item->meta_value;
+						if( trim($value) == '' )
+							continue;
+						
+							$edited = VB_unserialize_replace( $oldurl, $newurl, $value );
+						
+							if( $edited != $value ){
+								$fix = $wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '".$edited."' WHERE meta_id = ".$item->meta_id );
+								if( $fix )
+									$n++;
+							}
 						}
 					}
+					$results[$option] = array($n, $queries[$option][1]);
 				}
-				$results[$option] = array($n, $queries[$option][1]);
+				else{
+					$result = $wpdb->query( $wpdb->prepare( $queries[$option][0], $oldurl, $newurl) );
+					$results[$option] = array($result, $queries[$option][1]);
+				}
 			}
-			else{
-				$result = $wpdb->query( $wpdb->prepare( $queries[$option][0], $oldurl, $newurl) );
-				$results[$option] = array($result, $queries[$option][1]);
-			}
+			return $results;			
 		}
-		return $results;			
 	}
-	function VB_unserialize_replace( $from = '', $to = '', $data = '', $serialised = false ) {
-		try {
-			if ( is_string( $data ) && ( $unserialized = @unserialize( $data ) ) !== false ) {
-				$data = VB_unserialize_replace( $from, $to, $unserialized, true );
-			}
-			elseif ( is_array( $data ) ) {
-				$_tmp = array( );
-				foreach ( $data as $key => $value ) {
-					$_tmp[ $key ] = VB_unserialize_replace( $from, $to, $value, false );
+	if ( !function_exists( 'VB_unserialize_replace' ) ) {
+		function VB_unserialize_replace( $from = '', $to = '', $data = '', $serialised = false ) {
+			try {
+				if ( false !== is_serialized( $data ) ) {
+					$unserialized = unserialize( $data );
+					$data = VB_unserialize_replace( $from, $to, $unserialized, true );
 				}
-				$data = $_tmp;
-				unset( $_tmp );
+				elseif ( is_array( $data ) ) {
+					$_tmp = array( );
+					foreach ( $data as $key => $value ) {
+						$_tmp[ $key ] = VB_unserialize_replace( $from, $to, $value, false );
+					}
+					$data = $_tmp;
+					unset( $_tmp );
+				}
+				else {
+					if ( is_string( $data ) )
+						$data = str_replace( $from, $to, $data );
+				}
+				if ( $serialised )
+					return serialize( $data );
+			} catch( Exception $error ) {
 			}
-			else {
-				if ( is_string( $data ) )
-					$data = str_replace( $from, $to, $data );
-			}
-			if ( $serialised )
-				return serialize( $data );
-		} catch( Exception $error ) {
+			return $data;
 		}
-		return $data;
 	}
 	if ( isset( $_POST['VBUU_settings_submit'] ) && !check_admin_referer('VBUU_submit','VBUU_nonce')){
 		if(isset($_POST['VBUU_oldurl']) && isset($_POST['VBUU_newurl'])){
@@ -251,34 +250,34 @@ function VelvetBluesUU_management_page(){
 								<?php _e('posts, pages, custom post types, revisions','velvet-blues-update-urls'); ?>
 								)</label>
 							<br/>
-							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true" value="excerpts" />
-							<label for="VBUU_update_true"><strong>
+							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true1" value="excerpts" />
+							<label for="VBUU_update_true1"><strong>
 								<?php _e('URLs in excerpts','velvet-blues-update-urls'); ?>
 								</strong></label>
 							<br/>
-							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true" value="links" />
-							<label for="VBUU_update_true"><strong>
+							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true2" value="links" />
+							<label for="VBUU_update_true2"><strong>
 								<?php _e('URLs in links','velvet-blues-update-urls'); ?>
 								</strong></label>
 							<br/>
-							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true" value="attachments" />
-							<label for="VBUU_update_true"><strong>
+							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true3" value="attachments" />
+							<label for="VBUU_update_true3"><strong>
 								<?php _e('URLs for attachments','velvet-blues-update-urls'); ?>
 								</strong> (
 								<?php _e('images, documents, general media','velvet-blues-update-urls'); ?>
 								)</label>
 							<br/>
-							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true" value="custom" />
-							<label for="VBUU_update_true"><strong>
+							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true4" value="custom" />
+							<label for="VBUU_update_true4"><strong>
 								<?php _e('URLs in custom fields and meta boxes','velvet-blues-update-urls'); ?>
 								</strong></label>
 							<br/>
-							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true" value="guids" />
-							<label for="VBUU_update_true"><strong>
+							<input name="VBUU_update_links[]" type="checkbox" id="VBUU_update_true5" value="guids" />
+							<label for="VBUU_update_true5"><strong>
 								<?php _e('Update ALL GUIDs','velvet-blues-update-urls'); ?>
 								</strong> <span class="description" style="color:#f00;">
 								<?php _e('GUIDs for posts should only be changed on development sites.','velvet-blues-update-urls'); ?>
-								</span> <a href="http://www.velvetblues.com/go/guids/" target="_blank">
+								</span> <a href="http://codex.wordpress.org/Changing_The_Site_URL#Important_GUID_Note" target="_blank">
 								<?php _e('Learn More.','velvet-blues-update-urls'); ?>
 								</a></label>
 						</p></td>
